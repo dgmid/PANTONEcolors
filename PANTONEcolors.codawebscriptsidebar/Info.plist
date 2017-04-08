@@ -17,13 +17,13 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.1</string>
 	<key>CodaPlugInSupportedAPIVersion</key>
 	<integer>6</integer>
 	<key>CodaDescriptionString</key>
 	<string>A color palette of Pantone #hex and rgb() color values</string>
 	<key>CodaIconMaskTintString</key>
-	<string>#91B05A</string>
+	<string>#6d4cba</string>
 	<key>CodaAuthorString</key>
 	<string>D.G. Midwinter</string>
 </dict>

@@ -1,170 +1,249 @@
+/* note(@duncanmid): PANTONEcolors - Coda 2 Sidebar Plugin v.1.1 | © D.G. Midwinter, @duncanmid */
+
+//done(@duncanmid): options
+
+var swatches = [
+	'pantone solid coated',
+	'pantone solid coated 112 new colors',
+	'pantone color bridge coated',
+	'pantone color bridge coated 112 new colors',
+	'pantone pastels and neons coated',
+	'pantone extended gamut coated',
+	'pantone metallics coated',
+	'pantone premium metallics coated',
+	'pantone cmyk coated',
+	'pantone pms'
+];
+
+var parameters = {
+	'type': 	'hex',
+	'size': 	'large',
+	'name': 	'Yellow C',
+	'category': 'all',
+	'hex': 		'#FEDD00',
+	'rgb': 		'rgb(254,221,0)',
+	'comment':	'1',
+	'palette':	'pantone solid coated'
+};
+
+var options = Object.keys(parameters);
+
+
+
+//done(@duncanmid): setup (options)
+
 function setup() {
-	
-	//presets...
-	//presets...
-	if( window.CodaPlugInPreferences.preferenceForKey('type') === undefined ) {
-		window.CodaPlugInPreferences.setPreferenceForKey('hex', 'type');
-	}
-	
-	if( window.CodaPlugInPreferences.preferenceForKey('size') === undefined ) {
-		window.CodaPlugInPreferences.setPreferenceForKey('large', 'size');
-	}
-	
-	if( window.CodaPlugInPreferences.preferenceForKey('name') === undefined ) {
-		window.CodaPlugInPreferences.setPreferenceForKey('Yellow C', 'name');
-	}
-	
-	if( window.CodaPlugInPreferences.preferenceForKey('category') === undefined ) {
-		window.CodaPlugInPreferences.setPreferenceForKey('all', 'category');
-	}
-	
-	if( window.CodaPlugInPreferences.preferenceForKey('hex') === undefined ) {
-		window.CodaPlugInPreferences.setPreferenceForKey('#FEDD00', 'hex');
-	}
-	
-	if( window.CodaPlugInPreferences.preferenceForKey('rgb') === undefined ) {
-		window.CodaPlugInPreferences.setPreferenceForKey('rgb(254,221,0)', 'rgb');
-	}
-	
-	//set controls & classes based on preferences...
-	$('input[value="' + window.CodaPlugInPreferences.preferenceForKey('type') + '"]').prop('checked', true);
-	$('input[value="' + window.CodaPlugInPreferences.preferenceForKey('size') + '"]').prop('checked', true);
-	
-	//set swatch sizes...
-	if( window.CodaPlugInPreferences.preferenceForKey('size') === 'small' ) {
 
-		$('main ul li').addClass('small');
+	options.forEach( function(key) {
+		
+		if( window.CodaPlugInPreferences.preferenceForKey(key) === undefined ) {
+			window.CodaPlugInPreferences.setPreferenceForKey(parameters[key], key);
+		}
+	});
+}
 
-	} else if ( window.CodaPlugInPreferences.preferenceForKey('size') === 'list' ) {
+setup();
 
-		$('main ul li').removeClass('small').addClass('list');
-	}
+
+
+//done(@duncanmid): update header swatch
+
+function updateSwatch(name, hex, rgb) {
 	
-	//set category...
-	var category = window.CodaPlugInPreferences.preferenceForKey('category');
-	
-	$('#categories').val(category);
-	
-	if( category !== 'all' ) {		
-		$('main ul li[data-category!="' + category + '"]').addClass('hidden');		
-	}
-	
-	var type = window.CodaPlugInPreferences.preferenceForKey('type'),
-	value;
-	
-	if( type === 'hex' ) {
-		
-		value = window.CodaPlugInPreferences.preferenceForKey('hex');
-		
-	} {
-		
-		value = window.CodaPlugInPreferences.preferenceForKey('rgb');
-		
-	}
-	
-	//set selection...
-	$('.color-name').html(window.CodaPlugInPreferences.preferenceForKey('name'));
-	$('.swatch').css('background-color', value);
-	$('#header-button').attr('data-name', window.CodaPlugInPreferences.preferenceForKey('name')).attr('data-hex', window.CodaPlugInPreferences.preferenceForKey('hex')).attr('data-rgb', window.CodaPlugInPreferences.preferenceForKey('rgb'));
-	
-	//set type...
-	$('.selected-type').html(type);
+	$('#header-button').attr('data-name', name).attr('data-hex', hex).attr('data-rgb', rgb);
+	$('.color-name').html(name);
+	$('.swatch').css('background-color', hex);
 }
 
 
+
+//done(@duncanmid): initialize
+
+function initialize() {
+	
+	var palette 	= window.CodaPlugInPreferences.preferenceForKey('palette'),
+		type 		= window.CodaPlugInPreferences.preferenceForKey('type'),
+		size 		= window.CodaPlugInPreferences.preferenceForKey('size'),
+		name 		= window.CodaPlugInPreferences.preferenceForKey('name'),
+		hex 		= window.CodaPlugInPreferences.preferenceForKey('hex'),
+		rgb 		= window.CodaPlugInPreferences.preferenceForKey('rgb');
+	
+	
+	//note(@duncanmid): swatches select
+	
+	swatches.forEach( function(key) {
+		$('#palettes').append('<option value="' + key.replace(/\s+/g, "_") + '">' + key + '</option>');
+	});
+	
+	
+	//note(@duncanmid): set swatch sizes
+	
+	if( size === 'small' ) {
+
+		$('main ul').addClass('small');
+
+	} else if ( size === 'list' ) {
+
+		$('main ul').removeClass('small').addClass('list');
+	}
+	
+	
+	//note(@duncanmid): set controls & classes based on preferences
+	
+	$('input[value="' + type + '"]').prop('checked', true);
+	$('input[value="' + size + '"]').prop('checked', true);
+	
+	
+	//note(@duncanmid): set palette
+	
+	$('#palettes').val( palette );
+	$('#selected-palette').html( $('#palettes option:selected').text() );
+	
+	
+	//note(@duncanmid): set selection
+	
+	updateSwatch(name, hex, rgb);
+	
+	//note(@duncanmid): set type
+	
+	$('.selected-type').html(type);	
+}
+
+
+
+//note(@duncanmid): load colors
+
+function loadColors(swatches) {
+
+	var palette = Object.keys( this[swatches] ),
+		color;
+	
+	$('main ul').html('');
+	
+	palette.forEach( function(key) {
+		
+		color = this[swatches][key];
+		
+		$('main ul').append('<li><a href="#" data-hex="' + color.hex + '" data-rgb="' + color.rgb + '" style="background: ' + color.hex + ';" data-name="' + key + '" title="' + key + '"><span class="name">' + key + '</span></a></li>');
+	});
+}
+
+
+
+//note(@duncanmid): docready
+
 $(document).ready(function() {
+	
+	loadColors( window.CodaPlugInPreferences.preferenceForKey('palette') );	
+	initialize();
 
-	setup();
 
-
-	//select color...
-	$('#header-button, main ul li a').click(function(e) {
+	//done(@duncanmid): select color
+	
+	$('body').on('click', '#header-button, main ul li a', function( e ) {
 		
 		e.preventDefault();
-
-		var type 	= $('input[name="type"]:checked').val(),
-		name 		= $(this).attr('data-name'),
-		hex 		= $(this).attr('data-hex'),
-		rgb 		= $(this).attr('data-rgb'),
-		value;
-	
-		if( type === 'hex' ) {
-			//hex color...
-			value = hex;
-
-		} else {
-			//rgb color...
-			value = rgb;
-
-		}
+		
+		var type 		= $('input[name="type"]:checked').val(),
+			name 		= $(this).attr('data-name'),
+			hex 		= $(this).attr('data-hex'),
+			rgb 		= $(this).attr('data-rgb'),
+			comment 	= $('input[name="comment"]:checked').val(),
 			
-		//update selection...
+			range, prevRange, line, lineRange;
+			
+		//update selection
 		window.CodaPlugInPreferences.setPreferenceForKey(name, 'name');
 		window.CodaPlugInPreferences.setPreferenceForKey(hex, 'hex');
 		window.CodaPlugInPreferences.setPreferenceForKey(rgb, 'rgb');
 		
-		//update selection swatch...
-		$('#header-button').attr('data-name', name).attr('data-hex', hex).attr('data-rgb', rgb);
-		$('.color-name').html(name);
-		$('.swatch').css('background-color', value);
-		
-		//insert value into document...
+		//update selection swatch
+		updateSwatch(name, hex, rgb);
 
-		// 1) get selected text range...
-		var range = window.CodaTextView.selectedRange();
 		
-		// 2) replace selection with value...
-		window.CodaTextView.replaceCharactersInRangeWithString(range, value);
+		//insert value into document		
+		window.CodaTextView.beginUndoGrouping();
 		
-		// 3) re-select previous range to allow another selection...
-		window.CodaTextView.setSelectedRange(window.CodaTextView.previousWordRange());
+		// 1) get selected text range
+		range = window.CodaTextView.selectedRange();
+		
+		// 2) replace selection with value
+		window.CodaTextView.replaceCharactersInRangeWithString(range, eval(type));
+		
+		// 3) get previous range to allow another selection
+		prevRange = window.CodaTextView.previousWordRange();
+		
+		
+		// 4) if adding a comment
+		if( comment === '1' ) {
+		
+			line = window.CodaTextView.currentLine();
 			
-	});
-	
-	
-	//Category filter...
-	$('#categories').change(function() {
-		var category = $(this).val();
-		
-		$('main ul li').removeClass('hidden');
-		
-		//filter swatches...
-		if(category !== 'all') {
+			// if a comment exists eliminate it.
 			
-			$('main ul li[data-category!="' + category + '"]').addClass('hidden');
+			line = line.replace( /\s\/\*(.*)\*\// , '');
+			
+			line = line + ' /* '+ name +' */';
+			
+			lineRange = window.CodaTextView.rangeOfCurrentLine();
+			
+			window.CodaTextView.replaceCharactersInRangeWithString(lineRange, line);
+		
 		}
 		
-		window.CodaPlugInPreferences.setPreferenceForKey(category, 'category');
+		window.CodaTextView.endUndoGrouping();
+		
+		window.CodaTextView.setSelectedRange(prevRange);
 		
 	});
 	
-	//color value...
-	$('input[name="type"]').click(function() {
 
-		//update preferences...
+	
+	//done(@duncanmid): filter categories
+	
+	$('#palettes').change(function() {
+		
+		var palette = $(this).val(),
+			name 	= $('#palettes option:selected').text();
+		
+		$('#selected-palette').html(name);
+		
+		loadColors(palette);
+		
+		window.CodaPlugInPreferences.setPreferenceForKey(palette, 'palette');
+	});
+	
+	
+	
+	//done(@duncanmid): color value
+	
+	$('input[name="type"]').click(function() {
+		
 		var type = $('input[name="type"]:checked').val();
+		
 		$('.selected-type').html(type);
 		window.CodaPlugInPreferences.setPreferenceForKey(type, 'type');
-
 	});
 
-	//swatch size...
+
+
+	//done(@duncanmid): swatch size
+	
 	$('input[name="size"]').click(function() {
 		
-		var category = window.CodaPlugInPreferences.preferenceForKey('category');
-		
-		var the_class = $(this).filter(':checked').val();
+		var category = window.CodaPlugInPreferences.preferenceForKey('category'),
+			the_class = $(this).filter(':checked').val();
 
 		$('main ul li').removeClass('hidden');
 
 		if( the_class === 'large' ) {
-			$('main ul li').removeClass('small').removeClass('list');
+			$('main ul').removeClass('small').removeClass('list');
 
 		} else if ( the_class === 'small' ) {
-			$('main ul li').removeClass().addClass('small');
+			$('main ul').removeClass().addClass('small');
 
 		} else {
-			$('main ul li').removeClass().addClass('list');
+			$('main ul').removeClass().addClass('list');
 		}
 		
 		if(category !== 'all') {
@@ -172,15 +251,35 @@ $(document).ready(function() {
 			$('main ul li[data-category!="' + category + '"]').addClass('hidden');
 		}
 		
-		//update preferences...
 		window.CodaPlugInPreferences.setPreferenceForKey(the_class, 'size');
-
 	});
 
 
-	//open options panel...
+
+	//done(@duncanmid): open options panel
+	
 	$('#toggle-options').click(function() {
+		
 		$('footer').toggleClass('revealed');
+		
+		if( $('footer').hasClass('revealed') ) {
+			
+			setTimeout(function(){
+				$('main ul').addClass('blur');
+			}, 150);
+		
+		} else {
+			
+			$('main ul').removeClass('blur');
+		}
 	});
-
+	
+	
+	
+	//done(@duncanmid): twitter
+	
+	$('#twitter').click( function() {
+		
+		window.CodaPlugInsController.displayHTMLString('<meta http-equiv="refresh" content="1;url=http://twitter.com/duncanmid" />');
+	});
 });

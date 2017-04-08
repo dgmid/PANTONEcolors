@@ -1,3 +1,4 @@
+/* note(@duncanmid): PANTONEcolors - Coda 2 Sidebar Plugin v.1.1| © D.G. Midwinter, @duncanmid */
 
 * {
 	box-sizing: border-box !important;
@@ -15,12 +16,13 @@ html {
 body {
 	height: 100%;
 	width: 100%;
-	background-color: #3b434b;
-	color: #fff;
+	background: #142636;
+	color: #F6F7EE;
 	overflow: hidden;
 	position: relative;
 	border: 0 !important;
 	padding: 0 !important;
+	font-family: -apple-system, Helvetica, Arial, sans-serif !important;
 }
 
 header {
@@ -28,11 +30,11 @@ header {
 	height: 30px;
 	padding: 0 15px;
 	line-height: 30px;
-	background-color: #5A646E;
 	position: fixed;
 	top: 0;
 	left: 0;
-	box-shadow: 0 0 10px #3b434b;
+	background-color: #2A3B49;
+	box-shadow: 0 0 10px rgba(0,0,0,.25);
 }
 
 #header-button {
@@ -41,11 +43,11 @@ header {
 	background: transparent;
 	color: #fff;
 	padding: 4px 10px;
-	border-radius: 4px;
+	border-radius: 1px;
 }
 
 #header-button:active {
-	box-shadow: inset 0 2px 5px #3b434b;
+	background: #142636;
 }
 
 .swatch {
@@ -53,9 +55,9 @@ header {
 	height: 14px;
 	margin-right: 2px;
 	display: inline-block;
-	border-radius: 50%;
+	border-radius: 1px;
 	background-color: #5A646E;
-	vertical-align: text-top;
+	vertical-align: -3px;
 	transition: background-color .15s linear;
 }
 
@@ -67,14 +69,19 @@ main {
 	text-align: center;
 }
 
+.blur {
+	filter: blur(3px);
+}
+
 footer {
 	width: 100%;
+	height: calc(100% - 30px);
 	padding: 0;
 	background-color: transparent;
 	position: fixed;
-	bottom: -226px;
+	bottom: calc(-100% + 60px);
 	left: 0;
-	box-shadow: 0 0 10px #3b434b;
+	box-shadow: 0 0 10px rgba(0,0,0,.25);
 	transition: bottom .15s ease-in;
 }
 
@@ -87,18 +94,17 @@ footer.revealed {
 	line-height: 30px;
 	padding: 0 15px;
 	display: block;
-	color: #B0C4DE;
-	background-color: #5A646E;
+	background-color: #2A3B49;
 }
 
 .selected-type {
 	text-transform: uppercase;
 	font-weight: bold;
 	font-size: 10px;
-	border: 1px solid #B0C4DE;
+	border: 1px solid #F6F7EE;
 	padding: 0 4px;
 	margin-left: 5px;
-	border-radius: 3px;
+	border-radius: 1px;
 }
 
 #toggle-options {
@@ -113,7 +119,7 @@ footer.revealed {
 }
 
 footer .options-svg {
-	fill: #B0C4DE;
+	fill: #F6F7EE;
 }
 
 footer.revealed .options-svg {
@@ -121,6 +127,7 @@ footer.revealed .options-svg {
 }
 
 .options {
+	height: 100%;
 	padding: 10px 15px;
 	background-color: rgba(0,0,0,.85);
 	margin: 0;
@@ -139,7 +146,7 @@ dt {
 }
 
 dd {
-	color: #B0C4DE;
+	color: #F6F7EE;
 }
 
 dd input {
@@ -154,22 +161,27 @@ main ul {
 	display: block;
 	margin: 0 auto;
 	padding-bottom: 60px;
+	font-size: 0;
 }
 
 main ul li {
 	display: inline-block;
-	padding: 3px;
+	padding: 2px;
+    font-size: 0;
 }
 
-main ul li.list {
+main ul.small li {
+    padding: 1px 2px;
+}
+
+main ul.list li {
 	display: block;
-	padding: 3px;
+	padding: 2px;
 }
 
 main ul li a {
 	color: #fff;
 	text-decoration: none;
-	font-size: 11px;
 	display: block;
 	width: 28px;
 	height: 28px;
@@ -177,17 +189,19 @@ main ul li a {
 	overflow: hidden;
 	text-indent: -9000px;
 	box-shadow: 0 2px 6px rgba(0,0,0,.25);
-	border-radius: 3px;
+	border-radius: 1px;
 	cursor: default;
 	transition: width .15s ease-in, height .15s ease-in;
 }
 
-main ul li.small a {
+main ul.small li a {
 	width: 16px;
 	height: 16px;
+    font-size: 0;
 }
 
-main ul li.list a {
+main ul.list li a {
+    font-size: 11px;
 	height: 18px;
 	width: 100%;
 	text-indent: 0;
@@ -210,7 +224,7 @@ main ul li a:active {
 	display: none !important;
 }
 
-#categories {
+#palettes {
 	float: right;
 	display: block;
 	width: 16px;
@@ -222,3 +236,22 @@ main ul li a:active {
 	text-indent: 1000px;
 	background: transparent url('categories.svg') no-repeat center center;
 }
+
+#palettes:focus {
+	outline: none;
+}
+
+#twitter {
+	float: right;
+	border: 0;
+	background-color: #293B48;
+	color: #fff;
+	font-weight: bold;
+	opacity: 1;
+	transition: opacity .1s ease-in-out;
+}
+
+#twitter:active {
+	opacity: .6;
+}
+
