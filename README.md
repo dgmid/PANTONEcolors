@@ -1,4 +1,4 @@
-# -PANTONE-Colors-WebScript-Sidebar
+# PANTONE-Colors-WebScript-Sidebar
 Coda2 webscript sidebar plugin for Pantone colors
 
 A full set of Pantone colors in the Coda 2.5 sidebar.
