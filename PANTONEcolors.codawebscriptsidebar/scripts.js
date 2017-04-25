@@ -23,7 +23,7 @@ var parameters = {
 	'hex': 		'#FEDD00',
 	'rgb': 		'rgb(254,221,0)',
 	'comment':	'1',
-	'palette':	'pantone solid coated'
+	'palette':	'pantone_solid_coated'
 };
 
 var options = Object.keys(parameters);
