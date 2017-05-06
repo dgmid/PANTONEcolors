@@ -149,6 +149,7 @@ $(document).ready(function() {
 			hex 		= $(this).attr('data-hex'),
 			rgb 		= $(this).attr('data-rgb'),
 			comment 	= $('input[name="comment"]:checked').val(),
+			pallete 	= $('#palettes option:selected').text(),
 			
 			range, prevRange, line, lineRange;
 			
@@ -183,7 +184,7 @@ $(document).ready(function() {
 			
 			line = line.replace( /\s\/\*(.*)\*\// , '');
 			
-			line = line + ' /* '+ name +' */';
+			line = line + ' /* '+ name +' (' + pallete + ') */';
 			
 			lineRange = window.CodaTextView.rangeOfCurrentLine();
 			
