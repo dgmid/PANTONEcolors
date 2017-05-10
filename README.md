@@ -8,7 +8,7 @@ An extensive set of Pantone colors in the Coda sidebar with **hex** and **rgb** 
 
 ## Installation
 
-1. Download [PANTONE-Colors-WebScript-Sidebar-master.zip](https://github.com/dgmid/PANTONE-Colors-WebScript-Sidebar/archive/master.zip).
+1. Download [PANTONE-Colors-WebScript-Sidebar-master.zip](https://github.com/dgmid/PANTONE-Colors/archive/master.zip).
 2. Unzip it.
 3. Double-click the "PANTONEcolors.codawebscriptsidebar" icon.
 
